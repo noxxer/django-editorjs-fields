@@ -64,8 +64,7 @@ PLUGINS = getattr(
     )
 )
 
-if custom_plugins := getattr(settings, "EDITORJS_CUSTOM_PLUGINS"):
-    PLUGINS += custom_plugins
+EDITORJS_CUSTOM_PLUGINS = getattr(settings, "EDITORJS_CUSTOM_PLUGINS", None)
 
 CONFIG_TOOLS = getattr(
     settings, "EDITORJS_DEFAULT_CONFIG_TOOLS", {
