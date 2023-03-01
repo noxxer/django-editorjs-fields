@@ -108,8 +108,8 @@ CONFIG_TOOLS = getattr(
     }
 )
 
-if custom_config_tools := getattr(settings, "EDITORJS_CUSTOM_CONFIG_TOOLS"):
-    CONFIG_TOOLS += custom_config_tools
+if custom_config_tools := getattr(settings, "EDITORJS_CUSTOM_CONFIG_TOOLS", None):
+    CONFIG_TOOLS.update(custom_config_tools)
 
 PLUGINS_KEYS = {
     '@editorjs/image': 'Image',
