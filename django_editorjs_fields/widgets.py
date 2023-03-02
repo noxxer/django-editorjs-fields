@@ -8,7 +8,8 @@ from django.utils.functional import Promise, cached_property
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
-from .config import CONFIG_TOOLS, EDITORJS_CUSTOM_PLUGINS, PLUGINS, PLUGINS_KEYS, VERSION
+from .config import (CONFIG_TOOLS, EDITORJS_CUSTOM_PLUGINS_CSS, EDITORJS_CUSTOM_PLUGINS_JS, PLUGINS, PLUGINS_KEYS,
+                     VERSION)
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -85,8 +86,8 @@ class EditorJsWidget(widgets.Textarea):
         if plugins:
             js_list += ['//cdn.jsdelivr.net/npm/' + p for p in plugins]
 
-        if EDITORJS_CUSTOM_PLUGINS:
-            js_list += EDITORJS_CUSTOM_PLUGINS
+        if EDITORJS_CUSTOM_PLUGINS_JS:
+            js_list += EDITORJS_CUSTOM_PLUGINS_JS
 
         js_list.append('django-editorjs-fields/js/django-editorjs-fields.js')
 
@@ -94,6 +95,7 @@ class EditorJsWidget(widgets.Textarea):
             js=js_list,
             css={
                 'all': [
+                    *EDITORJS_CUSTOM_PLUGINS_CSS,
                     'django-editorjs-fields/css/django-editorjs-fields.css'
                 ]
             },
