@@ -1,4 +1,5 @@
 import json
+from urllib.parse import quote, unquote
 
 from django import template
 from django.template.loader import render_to_string
@@ -38,7 +39,11 @@ def generate_image(data):
 
     classes = ' '.join(classes)
 
-    return render_to_string('django-editorjs-fields/image.html', {'url': url, 'caption': caption, 'classes': classes})
+    safe_url = quote(url, safe=':/?=&')
+
+    original_url = unquote(safe_url)
+
+    return f'<img src="{original_url}" alt="{caption}" class="{classes}" />'
 
 
 def generate_delimiter():
