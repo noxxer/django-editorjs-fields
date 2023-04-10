@@ -36,11 +36,11 @@ def generate_image(data):
     if data.get('withBackground'):
         classes.append('withBackground')
     classes = ' '.join(classes)
-    safe_url = quote(url, safe=':/?=&')
-    original_url = unquote(safe_url)
+    url = unquote(url)
+    url = url.replace('&amp;', '&')
     return render_to_string(
         'django-editorjs-fields/image.html',
-        {'url': original_url, 'caption': caption, 'classes': classes}
+        {'url': url, 'caption': caption, 'classes': classes}
     )
 
 
