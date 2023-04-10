@@ -29,21 +29,19 @@ def generate_image(data):
     url = data.get('file', {}).get('url')
     caption = data.get('caption')
     classes = []
-
     if data.get('stretched'):
         classes.append('stretched')
     if data.get('withBorder'):
         classes.append('withBorder')
     if data.get('withBackground'):
         classes.append('withBackground')
-
     classes = ' '.join(classes)
-
     safe_url = quote(url, safe=':/?=&')
-
     original_url = unquote(safe_url)
-
-    return f'<img src="{original_url}" alt="{caption}" class="{classes}" />'
+    return render_to_string(
+        'django-editorjs-fields/image.html',
+        {'original_url': original_url, 'caption': caption, 'classes': classes}
+    )
 
 
 def generate_delimiter():
