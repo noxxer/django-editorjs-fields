@@ -40,7 +40,7 @@ def generate_image(data):
     original_url = unquote(safe_url)
     return render_to_string(
         'django-editorjs-fields/image.html',
-        {'original_url': original_url, 'caption': caption, 'classes': classes}
+        {'url': original_url, 'caption': caption, 'classes': classes}
     )
 
 
