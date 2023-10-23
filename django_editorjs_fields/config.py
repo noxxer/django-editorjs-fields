@@ -64,6 +64,9 @@ PLUGINS = getattr(
     )
 )
 
+EDITORJS_CUSTOM_PLUGINS_JS = getattr(settings, "EDITORJS_CUSTOM_PLUGINS_JS", None)
+EDITORJS_CUSTOM_PLUGINS_CSS = getattr(settings, "EDITORJS_CUSTOM_PLUGINS_CSS", None)
+
 CONFIG_TOOLS = getattr(
     settings, "EDITORJS_DEFAULT_CONFIG_TOOLS", {
         'Image': {
@@ -105,6 +108,9 @@ CONFIG_TOOLS = getattr(
         'Table': {'class': 'Table', 'inlineToolbar': True},
     }
 )
+
+if custom_config_tools := getattr(settings, "EDITORJS_CUSTOM_CONFIG_TOOLS", None):
+    CONFIG_TOOLS.update(custom_config_tools)
 
 PLUGINS_KEYS = {
     '@editorjs/image': 'Image',
