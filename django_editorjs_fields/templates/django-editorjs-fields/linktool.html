@@ -1,0 +1,16 @@
+{% if link and meta %}
+<div class="link-block">
+  <a href="{{ link }}" target="_blank" rel="nofollow noopener noreferrer">
+    {% if meta.image.url %}
+    <div class="link-block__image" style="background-image: url('{{ meta.image.url }}');"></div>
+    {% endif %}
+    {% if meta.title %}
+    <p class="link-block__title">{{ meta.title }}</p>
+    {% endif %}
+    {% if meta.description %}
+    <p class="link-block__description">{{ meta.description }}</p>
+    {% endif %}
+    <p class="link-block__link">{{ link }}</p>
+  </a>
+</div>
+{% endif %}
