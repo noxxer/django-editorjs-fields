@@ -1,7 +1,9 @@
-{% with tag='ol' if style == 'ordered' else 'ul' %}
-<{{ tag }}>
-{% for item in items %}
-    <li>{{ item }}</li>
-{% endfor %}
-</{{ tag }}>
-{% endwith %}
+{% if style == 'ordered' %}
+  {% with tag='ol' %}
+    {% include 'django-editorjs-fields/_list.html' %}
+  {% endwith %}
+{% else %}
+  {% with tag='ul' %}
+    {% include 'django-editorjs-fields/_list.html' %}
+  {% endwith %}
+{% endif %}

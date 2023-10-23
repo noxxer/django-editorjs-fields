@@ -92,7 +92,7 @@ def generate_embed(data):
 def generate_list(data):
     items = data.get('items')
     style = data.get('style')
-    return render_to_string('editorjs/list.html', {'items': items, 'style': style})
+    return render_to_string('django-editorjs-fields/list.html', {'items': items, 'style': style})
 
 
 BLOCK_GENERATORS = {
