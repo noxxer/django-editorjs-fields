@@ -22,7 +22,7 @@ def generate_link(data):
 def generate_header(data):
     text = data.get('text').replace('&nbsp;', ' ')
     level = data.get('level')
-    return render_to_string('django-editorjs-fields/header.html', {'text': text, 'level': level})
+    return render_to_string('django-editorjs-fields/header.html', {'text': text, 'level': str(level)})
 
 
 def generate_image(data):
