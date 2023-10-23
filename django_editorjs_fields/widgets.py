@@ -95,7 +95,7 @@ class EditorJsWidget(widgets.Textarea):
             js=js_list,
             css={
                 'all': [
-                    *EDITORJS_CUSTOM_PLUGINS_CSS,
+                    *(EDITORJS_CUSTOM_PLUGINS_CSS or []),
                     'django-editorjs-fields/css/django-editorjs-fields.css'
                 ]
             },
