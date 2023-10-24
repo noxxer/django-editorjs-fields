@@ -1,6 +1,8 @@
 <div class="embed {{ service }}">
   <iframe src="{{ embed }}" allow="autoplay" allowfullscreen="allowfullscreen"></iframe>
   {% if caption %}
-  {{ caption }}
+    <div class="embed-caption">
+      {{ caption }}
+    </div>
   {% endif %}
 </div>
