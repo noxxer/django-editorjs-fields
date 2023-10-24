@@ -110,6 +110,9 @@ BLOCK_GENERATORS = {
     'linktool': generate_link,
 }
 
+def register_block_generator(toolname, func):
+    BLOCK_GENERATORS[toolname] = func
+
 
 @register.filter(is_safe=True)
 def editorjs(value):
