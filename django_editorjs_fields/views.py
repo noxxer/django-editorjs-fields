@@ -21,6 +21,29 @@ from .utils import storage
 LOGGER = logging.getLogger('django_editorjs_fields')
 
 
+ALLOWED_TYPES = [
+                'image/jpeg',
+                'image/jpg',
+                'image/pjpeg',
+                'image/x-png',
+                'image/png',
+                'image/webp',
+                'image/gif',
+            ]
+
+
+def validate_file_type(the_file, allowed_types=None):
+    allowed_types = allowed_types or ALLOWED_TYPES
+    return the_file.content_type in allowed_types
+        
+def get_filename(the_file):
+    filename, extension = os.path.splitext(the_file.name)
+    if IMAGE_NAME_ORIGINAL is False:
+        filename = IMAGE_NAME(filename=filename, file=the_file)
+    filename += extension
+    return filename
+
+
 class ImageUploadView(View):
     http_method_names = ["post"]
     # http_method_names = ["post", "delete"]
@@ -32,26 +55,13 @@ class ImageUploadView(View):
     def post(self, request):
         if 'image' in request.FILES:
             the_file = request.FILES['image']
-            allowed_types = [
-                'image/jpeg',
-                'image/jpg',
-                'image/pjpeg',
-                'image/x-png',
-                'image/png',
-                'image/webp',
-                'image/gif',
-            ]
-            if the_file.content_type not in allowed_types:
+            
+            if not validate_file_type(the_file):
                 return JsonResponse(
                     {'success': 0, 'message': 'You can only upload images.'}
                 )
-
-            filename, extension = os.path.splitext(the_file.name)
-
-            if IMAGE_NAME_ORIGINAL is False:
-                filename = IMAGE_NAME(filename=filename, file=the_file)
-
-            filename += extension
+            
+            filename = get_filename(the_file)
 
             upload_path = IMAGE_UPLOAD_PATH
 
