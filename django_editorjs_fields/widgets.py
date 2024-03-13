@@ -85,9 +85,12 @@ class EditorJsWidget(widgets.Textarea):
             ]
 
         plugins = self.plugins or PLUGINS
-
         if plugins:
-            js_list += ['//cdn.jsdelivr.net/npm/' + p for p in plugins]
+            for p in plugins:
+                if 'http' in p:
+                    js_list += [p, ]
+                else:
+                    js_list += ['//cdn.jsdelivr.net/npm/' + p for p in plugins]
 
         if EDITORJS_CUSTOM_PLUGINS_JS:
             js_list += EDITORJS_CUSTOM_PLUGINS_JS
