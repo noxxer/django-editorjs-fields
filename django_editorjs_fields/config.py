@@ -67,6 +67,7 @@ PLUGINS = getattr(
     ),
 )
 
+EDITORJS_CDN_URL = getattr(settings, "EDITORJS_CDN_URL", None)
 EDITORJS_CUSTOM_PLUGINS_JS = getattr(settings, "EDITORJS_CUSTOM_PLUGINS_JS", None)
 EDITORJS_CUSTOM_PLUGINS_CSS = getattr(settings, "EDITORJS_CUSTOM_PLUGINS_CSS", None)
 

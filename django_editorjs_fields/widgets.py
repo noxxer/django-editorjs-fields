@@ -8,7 +8,7 @@ from django.utils.functional import Promise, cached_property
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
-from .config import (CONFIG_TOOLS, EDITORJS_CUSTOM_PLUGINS_CSS, EDITORJS_CUSTOM_PLUGINS_JS, PLUGINS, PLUGINS_KEYS,
+from .config import (CONFIG_TOOLS, EDITORJS_CUSTOM_PLUGINS_CSS, EDITORJS_CDN_URL, EDITORJS_CUSTOM_PLUGINS_JS, PLUGINS, PLUGINS_KEYS,
                      VERSION)
 
 
@@ -77,9 +77,12 @@ class EditorJsWidget(widgets.Textarea):
 
     @cached_property
     def media(self):
-        js_list = [
-            '//cdn.jsdelivr.net/npm/@editorjs/editorjs@' + VERSION  # lib
-        ]
+        if EDITORJS_CDN_URL:
+            js_list = [EDITORJS_CDN_URL, ]
+        else:
+            js_list = [
+                '//cdn.jsdelivr.net/npm/@editorjs/editorjs@' + VERSION  # lib
+            ]
 
         plugins = self.plugins or PLUGINS
 
