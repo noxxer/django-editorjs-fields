@@ -2,13 +2,18 @@
   var pluginName = "django_editorjs_fields"
   var pluginHelp =
     "Write about the issue here: https://github.com/2ik/django-editorjs-fields/issues"
-
+  window.editorjsInstances = {};
+  window.editorjsReady = new Promise((resolve) => {
+    window.editorjsReadyResolve = resolve;
+  });
   function initEditorJsPlugin() {
     var fields = document.querySelectorAll("[data-editorjs-textarea]")
 
     for (let i = 0; i < fields.length; i++) {
       initEditorJsField(fields[i])
     }
+    // Resolve the promise after initialization
+    window.editorjsReadyResolve();
   }
 
   function initEditorJsField(textarea) {
@@ -60,9 +65,7 @@
         return false
       }
     }
-
-    textarea.style.display = "none" // remove old textarea
-
+    textarea.style.display = "none"
     var editorConfig = {
       id: id,
       holder: holder,
@@ -70,7 +73,6 @@
     }
 
     if ("tools" in config) {
-      // set config
       var tools = config.tools
 
       for (var plugin in tools) {
@@ -150,7 +152,9 @@
           console.log("save error: ", error)
         })
     }
-    var editor = new EditorJS(editorConfig)
+    var editor = new EditorJS(editorConfig);
+    window.editorjsInstances[id] = editor;
+    document.dispatchEvent(new CustomEvent('editorjs:initialized', { detail: { id: id, editor: editor } }));
     holder.setAttribute("data-processed", 1)
   }
 
@@ -160,7 +164,6 @@
 
   addEventListener("DOMContentLoaded", initEditorJsPlugin)
 
-  // Event
   if (typeof django === "object" && django.jQuery) {
     django.jQuery(document).on("formset:added", function (event, $row) {
       var areas = $row.find("[data-editorjs-textarea]").get()
